@@ -15,7 +15,7 @@ USER github
 
 WORKDIR /runner
 
-COPY get_runner_version.sh /runner
+COPY --chmod=755 get_runner_version.sh /runner
 
 RUN set -eux; \
     chmod +x get_runner_version.sh; \
