@@ -9,7 +9,8 @@ RUN apt-get update && \
 
 
 RUN groupadd -g ${GROUP_ID} github && \
-    useradd -m -s /bin/bash -u ${USER_ID} -g github github
+    useradd -m -s /bin/bash -u ${USER_ID} -g github github && \
+    echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 WORKDIR /runner
 
