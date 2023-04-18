@@ -24,7 +24,7 @@ RUN set -eux; \
     rm runner_version.txt
 
 USER github
-
+ENV DEBIAN_FRONTEND=noninteractive
 RUN sudo ./bin/installdependencies.sh
 
 COPY entrypoint.sh /runner
