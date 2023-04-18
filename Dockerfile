@@ -10,7 +10,8 @@ RUN apk --no-cache add \
     sudo
 
 RUN addgroup -g ${GROUP_ID} github \
-    && adduser -D -s /bin/bash -u ${USER_ID} -G github github
+    && adduser -D -s /bin/bash -u ${USER_ID} -G github github \
+    && echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 WORKDIR /runner
 
