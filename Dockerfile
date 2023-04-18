@@ -18,9 +18,10 @@ WORKDIR /runner
 COPY get_runner_version.sh /runner
 
 RUN set -eux; \
-    /bin/bash chmod +x get_runner_version.sh ; \
-    /bin/bash get_runner_version.sh > runner_version.txt; \
-    curl -sSL https://github.com/actions/runner/releases/download/v$(cat runner_version.txt)/actions-runner-linux-x64-$(cat runner_version.txt).tar.gz | tar -xz; \
+    chmod +x get_runner_version.sh; \
+    ./get_runner_version.sh > runner_version.txt; \
+    runner_version=$(cat runner_version.txt); \
+    curl -sSL "https://github.com/actions/runner/releases/download/v${runner_version}/actions-runner-linux-x64-${runner_version}.tar.gz" | tar -xz; \
     rm runner_version.txt
 
 ENTRYPOINT ["/runner/actions-runner"]
