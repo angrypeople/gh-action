@@ -2,10 +2,11 @@ FROM ubuntu:20.04
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ENV DEBIAN_FRONTEND=noninteractive
 
 # 필수 패키지 설치
 RUN apt-get update && \
-    apt-get install -y curl sudo git
+    apt-get install -y curl sudo git tzdata
 
 
 RUN groupadd -g ${GROUP_ID} github && \
@@ -24,7 +25,7 @@ RUN set -eux; \
     rm runner_version.txt
 
 USER github
-ENV DEBIAN_FRONTEND=noninteractive
+
 RUN sudo ./bin/installdependencies.sh
 
 COPY entrypoint.sh /runner
