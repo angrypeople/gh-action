@@ -34,4 +34,5 @@ RUN sudo chown -R github:github /runner
 COPY entrypoint.sh /runner
 RUN sudo chmod +x /runner/entrypoint.sh
 
+
 ENTRYPOINT ["/runner/entrypoint.sh"]
