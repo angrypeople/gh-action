@@ -6,7 +6,8 @@ ARG GROUP_ID=1000
 RUN apk --no-cache add \
     curl \
     bash \
-    tar
+    tar \
+    jq
 
 RUN addgroup -g ${GROUP_ID} github \
     && adduser -D -s /bin/bash -u ${USER_ID} -G github github
@@ -15,7 +16,7 @@ USER github
 
 WORKDIR /runner
 
-COPY --chmod=755 get_runner_version.sh /runner
+COPY get_runner_version.sh /runner
 
 RUN set -eux; \
     chmod +x get_runner_version.sh; \
