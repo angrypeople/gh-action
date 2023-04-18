@@ -28,6 +28,9 @@ USER github
 
 RUN sudo ./bin/installdependencies.sh
 
+# 권한조정
+RUN sudo chown -R github:github /runner
+
 COPY entrypoint.sh /runner
 RUN sudo chmod +x /runner/entrypoint.sh
 
