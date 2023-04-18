@@ -1,17 +1,15 @@
-FROM alpine:3.14
+FROM ubuntu:20.04
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-RUN apk --no-cache add \
-    curl \
-    bash \
-    tar \
-    sudo
+# 필수 패키지 설치
+RUN apt-get update && \
+    apt-get install -y curl sudo git
 
-RUN addgroup -g ${GROUP_ID} github \
-    && adduser -D -s /bin/bash -u ${USER_ID} -G github github \
-    && echo "github ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+RUN groupadd -g ${GROUP_ID} github && \
+    useradd -m -s /bin/bash -u ${USER_ID} -g github github
 
 WORKDIR /runner
 
@@ -24,15 +22,11 @@ RUN set -eux; \
     curl -sSL "https://github.com/actions/runner/releases/download/v${runner_version}/actions-runner-linux-x64-${runner_version}.tar.gz" | tar -xz; \
     rm runner_version.txt
 
-# GitHub Action Runner를 실행할 사용자 변경
 USER github
 
-# 필요한 종속성 설치
 RUN sudo ./bin/installdependencies.sh
 
-# GitHub Action Runner를 실행하기 위한 스크립트 작성
 COPY entrypoint.sh /runner
 RUN sudo chmod +x /runner/entrypoint.sh
 
-# 엔트리 포인트 설정
 ENTRYPOINT ["/runner/entrypoint.sh"]
