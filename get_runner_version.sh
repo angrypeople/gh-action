@@ -15,4 +15,4 @@ if [ -z "${LATEST_VERSION}" ]; then
 fi
 
 
-echo "LATEST_VERSION: ${LATEST_VERSION}"
+echo "${LATEST_VERSION}"

@@ -12,18 +12,18 @@ RUN apk --no-cache add \
 RUN addgroup -g ${GROUP_ID} github \
     && adduser -D -s /bin/bash -u ${USER_ID} -G github github
 
-USER github
-
 WORKDIR /runner
 
 COPY get_runner_version.sh /runner
 
 RUN set -eux; \
-    chmod +x get_runner_version.sh; \
     ./get_runner_version.sh > runner_version.txt; \
     runner_version=$(cat runner_version.txt); \
     curl -sSL "https://github.com/actions/runner/releases/download/v${runner_version}/actions-runner-linux-x64-${runner_version}.tar.gz" | tar -xz; \
     rm runner_version.txt
+
+
+USER github
 
 ENTRYPOINT ["/runner/actions-runner"]
 CMD ["--help"]
