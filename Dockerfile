@@ -24,6 +24,8 @@ RUN set -eux; \
     curl -sSL "https://github.com/actions/runner/releases/download/v${runner_version}/actions-runner-linux-x64-${runner_version}.tar.gz" | tar -xz; \
     rm runner_version.txt
 
+RUN apt-get install -y docker.io
+RUN sudo usermod -aG docker github
 USER github
 
 RUN sudo ./bin/installdependencies.sh
